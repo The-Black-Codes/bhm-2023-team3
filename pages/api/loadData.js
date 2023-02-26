@@ -1,12 +1,12 @@
-// import csv from "csvtojson";
-// import clientPromise from "../../lib/mongodb";
+import csv from "csvtojson";
+import clientPromise from "../../lib/mongodb";
 
 export default async function handler(req, res) {
   // const client = await clientPromise;
   // const db = client.db("broadband_data");
-  // const collection = db.collection("summary_by_geography");
+  // const collection = db.collection("cable_broadband");
 
-  // const csvFilePath = "data/summary_by_geography.csv";
+  // const csvFilePath = "data/top-100-cable.csv";
   // const jsonArray = await csv().fromFile(csvFilePath);
 
   // try {
