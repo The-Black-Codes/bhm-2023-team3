@@ -17,7 +17,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Mapbox />
+        <Mapbox
+          accessToken={
+            "pk.eyJ1IjoidGZsZXRjaDU1IiwiYSI6ImNsZWx5dnQ4MTB3Y24zcm5ocndqbnIwZ2kifQ.Ag4DUV801qr57RDPpqvF5w"
+          }
+        />
       </main>
     </>
   );

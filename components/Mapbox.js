@@ -1,30 +1,49 @@
-import React, { useEffect, useRef, useState } from 'react';
-import "mapbox-gl/dist/mapbox-gl.css";
+import React, { useState, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 
-const Mapbox = () => {
-  mapboxgl.accessToken = ""
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [lng, setLng] = useState(-122.4376);
-  const [lat, setLat] = useState(37.7577);
-  const [zoom, setZoom] = useState(8);
+const Map = ({ accessToken }) => {
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
+    mapboxgl.accessToken = accessToken;
+    const newMap = new mapboxgl.Map({
+      container: "map",
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [lng, lat],
-      zoom: zoom
+      center: [-86.6, 35.9],
+      zoom: 7,
     });
-  });
+
+    setMap(newMap);
+
+    newMap.on("load", () => {
+      newMap.addSource("states", {
+        type: "geojson",
+        data: "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json",
+      });
+
+      newMap.addLayer({
+        id: "state-borders",
+        type: "line",
+        source: "states",
+        layout: {},
+        paint: {
+          "line-color": "#ff0000",
+          "line-width": 2,
+        },
+        filter: ["==", "name", "Tennessee"],
+      });
+    });
+
+    return () => {
+      newMap.remove();
+    };
+  }, [accessToken]);
 
   return (
-    <div>
-      <div ref={mapContainer} className="map-container" />
+    <div id="map" style={{ height: "800px" }}>
+      {map && <div>// Add map controls here</div>}
     </div>
   );
-}
+};
 
-export default Mapbox
+export default Map;

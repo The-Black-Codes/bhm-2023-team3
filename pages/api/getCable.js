@@ -5,6 +5,7 @@ export default async function handler(req, res) {
   const client = await clientPromise;
   const db = client.db("broadband_data");
   const collection = db.collection("cable_broadband");
+
   const data = await collection
     .find({})
     .limit(limit)
